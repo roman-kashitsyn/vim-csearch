@@ -1,0 +1,60 @@
+*csearch.txt*  Plugin that integrates csearch/cindex with Vim
+==============================================================================
+Author:  Roman Kashitsyn <roman.kashitsyn+csvim@gmail.com>    *csearch-author*
+License: Same terms as Vim itself (see |license|)
+
+This plugin is only available if 'compatible' is not set.
+
+{Vi does not have any of this}
+
+==============================================================================
+INTRODUCTION                                                         *csearch*
+
+This plugin integrates Google's codesearch tool (https://github.com/google/codesearch)
+as a grep-like utility.  It allows one to index your files without leaving Vim
+and populate |quickfix| list or |location-list| with `csearch` search results.
+
+:Cindex {path}...                                                    *:Cindex*
+
+  Prepares the trigram index to use by |:Csearch|.
+  If paths are specified, adds directory trees named by each path to the
+  index.  If invoked with no paths, it reindexes the paths that have
+  already been added, in case the files have changed. 
+
+:Csearch {pattern} [{filepattern}]                                   *:Csearch*
+
+  Search the index for the specified RE2 regexp {pattern}.
+  If the {filepattern} is specified, the search is limited to files whose
+  names match the {filepattern} RE2 regexp.
+  The search results are displayed in a |quickfix| window.
+  Csearch uses the index stored in $CSEARCHINDEX or, if that variable is unset
+  or empty, $HOME/.csearchindex. 
+
+:Lcsearch {pattern} [{filepattern}]                                 *:Lcsearch*
+
+  Just like |:Csearch|, but instead of the |quickfix| list, results are placed
+  in the current |location-list|.
+
+==============================================================================
+CONFIGURATION                                           *csearch-configuration*
+
+                                                                 *csearchprg*
+g:csearchprg
+Default: "csearch"
+
+The `csearch` command and its default arguments.
+
+Example:
+>
+    let g:csearchprg = "~/bin/csearch -i"
+<
+                                                                  *cindexprg*
+g:indexprg
+Default: "cindex"
+
+The `cindex` command and its default arguments.
+
+Example:
+>
+    let g:cindexprg = "~/bin/cindex"
+<
